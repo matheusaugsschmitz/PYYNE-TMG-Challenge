@@ -1,0 +1,8 @@
+server:
+  port: 8100
+
+springdoc:
+  api-docs:
+    enabled: true
+  packages-to-scan: com.tmg.codingchallenge.cachechallenge.controller, com.tmg.codingchallenge.stackchallenge.controller
+  paths-to-match: /**
