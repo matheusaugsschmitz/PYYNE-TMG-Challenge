@@ -15,7 +15,6 @@ public class CacheEntry {
     private final Long ttl;
     private final LocalDateTime expiresAt;
 
-    // TODO: unit tests
     public CacheEntry(String key, String value, Long ttl) {
         this.key = key;
         this.value = value;
