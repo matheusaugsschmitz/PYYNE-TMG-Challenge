@@ -1,4 +1,4 @@
-package com.tmg.codingchallenge.unittest.stackchallenge.model;
+package com.tmg.codingchallenge.unittest.cachechallenge.model;
 
 import com.tmg.codingchallenge.cachechallenge.model.CacheEntry;
 import org.junit.jupiter.api.Test;
