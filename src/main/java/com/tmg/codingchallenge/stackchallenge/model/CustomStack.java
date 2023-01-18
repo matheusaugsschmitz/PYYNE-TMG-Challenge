@@ -4,8 +4,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.HashSet;
-
 import static java.util.Objects.isNull;
 
 public class CustomStack<T> {
