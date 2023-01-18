@@ -92,6 +92,12 @@ For the challenge I decided to implement a custom stack class (`com.tmg.codingch
 For the matters of this test, I decided to implement an active expiring storage, but in real applications I would take
 into consideration the usage it's intended for the feature in order to decide for an active or passive approach, and I would also prioritize using a existent tool if it matches the applications needs.
 
+#### Active Expiration System
+The active expiration system were made using a `@Scheduled` method located on `com.tmg.codingchallenge.cachechallenge.job.CacheExpirationJob` that runs every second and calls a Service Class that remove every item that is expired from the in-memory key-value store.
+> In real applications I would use some third-party software based structure as Spring Cache with Redis, so the usage of a Scheduled method was just for this challenge in particular. Another thing that is worth mentioning is that `@Scheduled` is not safe for multi-instance environment so if I need to develop something and the only option is to use `@Scheduled` structures I will take into consideration using it along with [ShedLock](https://www.springcloud.io/post/2022-07/shedlock/#gsc.tab=0) or replace it with a Cluster Mode [Quartz](https://docs.spring.io/spring-boot/docs/2.0.0.M3/reference/html/boot-features-quartz.html) setup.
+
+#### Cache Data Structure
+
 TODO explain more (scheduler, repository data structure...)
 
 > The package `com.tmg.codingchallenge.cachechallenge` contains the classes for this part of the test.

@@ -13,8 +13,6 @@ public class CacheExpirationJob {
 
     private final CacheExpirationService service;
 
-    // TODO: put on README file a obs about not using Shedlock because of this particular test, but in real environments, if happens to use Schedule the Shedlock will help with concurrency problems
-
     /**
      * Cron expression "* * * * * *" = Runs every second.
      */
