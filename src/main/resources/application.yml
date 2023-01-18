@@ -4,5 +4,5 @@ server:
 springdoc:
   api-docs:
     enabled: true
-  packages-to-scan: com.tmg.codingchallenge.cachechallenge.controller, com.tmg.codingchallenge.stackchallenge.controller
+  packages-to-scan: com.tmg.codingchallenge.cachechallenge.api, com.tmg.codingchallenge.stackchallenge.api
   paths-to-match: /**
