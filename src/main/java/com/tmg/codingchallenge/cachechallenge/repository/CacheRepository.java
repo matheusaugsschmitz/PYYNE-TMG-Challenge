@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -70,7 +69,7 @@ public class CacheRepository {
                 .map(expirationMap::get)
                 .ifPresent(expirationEntry -> {
                     expirationEntry.remove(cacheEntry.getKey());
-                    if(expirationEntry.isEmpty())
+                    if (expirationEntry.isEmpty())
                         expirationMap.remove(cacheEntry.getExpiresAt());
                 });
     }
