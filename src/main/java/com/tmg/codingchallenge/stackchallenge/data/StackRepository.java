@@ -1,6 +1,6 @@
-package com.tmg.codingchallenge.stackchallenge.repository;
+package com.tmg.codingchallenge.stackchallenge.data;
 
-import com.tmg.codingchallenge.stackchallenge.model.CustomStack;
+import com.tmg.codingchallenge.stackchallenge.domain.CustomStack;
 import org.springframework.stereotype.Component;
 
 @Component

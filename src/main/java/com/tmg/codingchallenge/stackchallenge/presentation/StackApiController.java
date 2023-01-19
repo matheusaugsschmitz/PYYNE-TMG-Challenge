@@ -1,6 +1,5 @@
-package com.tmg.codingchallenge.stackchallenge.api;
+package com.tmg.codingchallenge.stackchallenge.presentation;
 
-import com.tmg.codingchallenge.stackchallenge.dto.NewStackItemRequestDto;
 import com.tmg.codingchallenge.stackchallenge.service.StackService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.tmg.codingchallenge.cachechallenge.service;
 
-import com.tmg.codingchallenge.cachechallenge.repository.CacheRepository;
+import com.tmg.codingchallenge.cachechallenge.data.CacheRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

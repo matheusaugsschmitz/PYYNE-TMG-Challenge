@@ -1,6 +1,6 @@
 package com.tmg.codingchallenge.unittest.stackchallenge.service;
 
-import com.tmg.codingchallenge.stackchallenge.repository.StackRepository;
+import com.tmg.codingchallenge.stackchallenge.data.StackRepository;
 import com.tmg.codingchallenge.stackchallenge.service.StackServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

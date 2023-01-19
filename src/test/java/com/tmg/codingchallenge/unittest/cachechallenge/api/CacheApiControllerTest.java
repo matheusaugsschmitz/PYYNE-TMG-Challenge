@@ -2,8 +2,8 @@ package com.tmg.codingchallenge.unittest.cachechallenge.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tmg.codingchallenge.cachechallenge.api.CacheApiController;
-import com.tmg.codingchallenge.cachechallenge.dto.NewEntryRequestDto;
+import com.tmg.codingchallenge.cachechallenge.presentation.CacheApiController;
+import com.tmg.codingchallenge.cachechallenge.presentation.NewEntryRequestDto;
 import com.tmg.codingchallenge.cachechallenge.service.CacheService;
 import com.tmg.codingchallenge.global.dto.ArgumentErrorDto;
 import com.tmg.codingchallenge.global.dto.ArgumentExceptionResponseDto;

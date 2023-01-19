@@ -1,6 +1,6 @@
 package com.tmg.codingchallenge.unittest.cachechallenge.service;
 
-import com.tmg.codingchallenge.cachechallenge.repository.CacheRepository;
+import com.tmg.codingchallenge.cachechallenge.data.CacheRepository;
 import com.tmg.codingchallenge.cachechallenge.service.CacheExpirationServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

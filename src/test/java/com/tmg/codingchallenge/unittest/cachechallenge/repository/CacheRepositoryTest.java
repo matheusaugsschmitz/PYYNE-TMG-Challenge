@@ -1,7 +1,7 @@
 package com.tmg.codingchallenge.unittest.cachechallenge.repository;
 
-import com.tmg.codingchallenge.cachechallenge.model.CacheEntry;
-import com.tmg.codingchallenge.cachechallenge.repository.CacheRepository;
+import com.tmg.codingchallenge.cachechallenge.domain.CacheEntry;
+import com.tmg.codingchallenge.cachechallenge.data.CacheRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

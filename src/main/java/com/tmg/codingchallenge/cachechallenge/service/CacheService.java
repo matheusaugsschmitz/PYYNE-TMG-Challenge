@@ -1,6 +1,6 @@
 package com.tmg.codingchallenge.cachechallenge.service;
 
-import com.tmg.codingchallenge.cachechallenge.dto.NewEntryRequestDto;
+import com.tmg.codingchallenge.cachechallenge.presentation.NewEntryRequestDto;
 
 public interface CacheService {
 

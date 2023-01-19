@@ -1,4 +1,4 @@
-package com.tmg.codingchallenge.stackchallenge.dto;
+package com.tmg.codingchallenge.stackchallenge.presentation;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

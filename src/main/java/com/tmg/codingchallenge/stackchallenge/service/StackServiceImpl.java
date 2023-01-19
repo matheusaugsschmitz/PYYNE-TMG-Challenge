@@ -1,7 +1,7 @@
 package com.tmg.codingchallenge.stackchallenge.service;
 
-import com.tmg.codingchallenge.stackchallenge.repository.StackRepository;
-import com.tmg.codingchallenge.stackchallenge.util.StringUtils;
+import com.tmg.codingchallenge.stackchallenge.data.StackRepository;
+import com.tmg.codingchallenge.global.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

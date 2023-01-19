@@ -1,4 +1,4 @@
-package com.tmg.codingchallenge.stackchallenge.util;
+package com.tmg.codingchallenge.global.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

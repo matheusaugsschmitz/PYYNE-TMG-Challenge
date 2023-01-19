@@ -1,6 +1,5 @@
-package com.tmg.codingchallenge.cachechallenge.api;
+package com.tmg.codingchallenge.cachechallenge.presentation;
 
-import com.tmg.codingchallenge.cachechallenge.dto.NewEntryRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

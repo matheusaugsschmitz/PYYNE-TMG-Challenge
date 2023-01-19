@@ -1,6 +1,5 @@
-package com.tmg.codingchallenge.cachechallenge.api;
+package com.tmg.codingchallenge.cachechallenge.presentation;
 
-import com.tmg.codingchallenge.cachechallenge.dto.NewEntryRequestDto;
 import com.tmg.codingchallenge.cachechallenge.service.CacheService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

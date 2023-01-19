@@ -24,35 +24,6 @@ This project is an implementation that matches with all the code challenge requi
 
 ### General
 
-#### The package structure
-Before going into details about the implementation, the package structure is explained as it follows:
-```
-java/
-├─ com.tmg.codingchallenge (base package)/
-│  ├─ scope-level-package (global;stack;cache)/
-│  │  ├─ api/
-│  │  │  ├─  {REST Controllers and respective Swagger doc}
-│  │  ├─ dto/
-│  │  │  ├─  {Classes meant for data transfer only}
-│  │  ├─ job/
-│  │  │  ├─ {Classes with schedulers}
-│  │  ├─ model/
-│  │  │  ├─ {Domain related classes}
-│  │  ├─ repository/
-│  │  │  ├─ {Classes that represents the data layer}
-│  │  ├─ service/
-│  │  │  ├─ {Classes that wrap up domain specific implementations}
-│  │  ├─ config/
-│  │  │  ├─ {Classes used to configure beans or tools}
-│  │  ├─ converter/
-│  │  │  ├─ {Classes for non-model related object convertion}
-│  │  ├─ helper/
-│  │  │  ├─ {Classes with static methods meant for application specific functionality}
-│  │  ├─ util/
-│  │  │  ├─ {Classes with static methods meant for generic functionality}
-```
-> Note: in the `scope-level-package` there is a specific package for each project but there is another package as well. The third package `global` was used to centralize global settings that are used in both challenges such as the **Swagger configuration class** and a **Global Exception Handler**.
-
 #### Global Exception Handler and Controller response pattern for BAD REQUESTS
 The Global Exception Handler is meant to define a pattern for HTTP bad responses, such as `BAD REQUEST`, `INTERNAL SERVER ERROR` and so on.
 
@@ -91,7 +62,7 @@ You can see an example for each one of the data flow variations in the images be
 > Disclaimer: In real projects I would prefer to not let the images used for documenting something in the project itself.
 
 ### Stack Challenge
-For the challenge I decided to implement a custom stack class (`com.tmg.codingchallenge.stackchallenge.model.CustomStack`), but in real applications I would rather use
+For the challenge I decided to implement a custom stack class (`com.tmg.codingchallenge.stackchallenge.domain.CustomStack`), but in real applications I would rather use
   `java.utils.Stack` if it's suitable for the application needs.
 > The package `com.tmg.codingchallenge.stackchallenge` contains the classes for this part of the test.
 
@@ -106,7 +77,7 @@ The active expiration system were made using a `@Scheduled` method located on `c
 
 #### Cache Data Structure
 
-When developing the key-value in-memory store (that I have labeled as "cache" on this project) I have created in the repository layer (`com.tmg.codingchallenge.cachechallenge.repository.CacheRepository`) two HashMaps, the first one working as the real key-value store and the second one to store the expiration data.
+When developing the key-value in-memory store (that I have labeled as "cache" on this project) I have created in the repository layer (`com.tmg.codingchallenge.cachechallenge.data.CacheRepository`) two HashMaps, the first one working as the real key-value store and the second one to store the expiration data.
 
 I decided to use HashMap mainly because in most uses that are made in this project it helps to avoid iterating lists and to make sure there is only one register per key or per expiration time.
 
