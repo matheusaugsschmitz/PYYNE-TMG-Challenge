@@ -1,4 +1,4 @@
-package com.tmg.codingchallenge.cachechallenge.dto;
+package com.tmg.codingchallenge.cachechallenge.presentation;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

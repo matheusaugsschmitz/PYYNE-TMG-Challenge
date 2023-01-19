@@ -1,4 +1,4 @@
-package com.tmg.codingchallenge.cachechallenge.model;
+package com.tmg.codingchallenge.cachechallenge.domain;
 
 import lombok.Getter;
 

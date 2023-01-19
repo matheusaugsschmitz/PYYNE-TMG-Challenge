@@ -1,8 +1,8 @@
 package com.tmg.codingchallenge.cachechallenge.service;
 
-import com.tmg.codingchallenge.cachechallenge.dto.NewEntryRequestDto;
-import com.tmg.codingchallenge.cachechallenge.model.CacheEntry;
-import com.tmg.codingchallenge.cachechallenge.repository.CacheRepository;
+import com.tmg.codingchallenge.cachechallenge.presentation.NewEntryRequestDto;
+import com.tmg.codingchallenge.cachechallenge.domain.CacheEntry;
+import com.tmg.codingchallenge.cachechallenge.data.CacheRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;

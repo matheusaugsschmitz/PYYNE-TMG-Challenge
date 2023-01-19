@@ -1,8 +1,8 @@
 package com.tmg.codingchallenge.unittest.cachechallenge.service;
 
-import com.tmg.codingchallenge.cachechallenge.dto.NewEntryRequestDto;
-import com.tmg.codingchallenge.cachechallenge.model.CacheEntry;
-import com.tmg.codingchallenge.cachechallenge.repository.CacheRepository;
+import com.tmg.codingchallenge.cachechallenge.presentation.NewEntryRequestDto;
+import com.tmg.codingchallenge.cachechallenge.domain.CacheEntry;
+import com.tmg.codingchallenge.cachechallenge.data.CacheRepository;
 import com.tmg.codingchallenge.cachechallenge.service.CacheServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
