@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StackRepository {
 
-    private static final CustomStack<String> stack = new CustomStack<>();
+    private final CustomStack<String> stack = new CustomStack<>();
 
     public String popTopItem() {
         return stack.pop();

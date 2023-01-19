@@ -1,4 +1,4 @@
-package com.tmg.codingchallenge.integrationtest.cachechallenge;
+package com.tmg.codingchallenge.unittest.cachechallenge.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest(CacheApiController.class)
-class CacheApiControllerIntegrationTest {
+class CacheApiControllerTest {
 
     @Autowired
     private MockMvc mvc;

@@ -53,7 +53,7 @@ class CustomStackTest {
     }
 
     @Test
-    void popWithSingleItemOnStack_withSuccess(){
+    void popWithSingleItemOnStack_withSuccess() {
         // Arrange
         CustomStack<String> stack = new CustomStack<>();
         String firstItem = "Silvia S14";
@@ -68,7 +68,7 @@ class CustomStackTest {
     }
 
     @Test
-    void popWithTwoItemsOnStack_withSuccess(){
+    void popWithTwoItemsOnStack_withSuccess() {
         // Arrange
         CustomStack<String> stack = new CustomStack<>();
         String firstItem = "Silvia S14";
@@ -86,7 +86,7 @@ class CustomStackTest {
     }
 
     @Test
-    void popWithNoItemsOnStack_withSuccess(){
+    void popWithNoItemsOnStack_withSuccess() {
         // Arrange
         CustomStack<String> stack = new CustomStack<>();
 

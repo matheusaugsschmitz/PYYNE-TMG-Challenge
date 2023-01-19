@@ -81,7 +81,7 @@ The Global Exception Handler is meant to define a pattern for HTTP bad responses
 > When an unhandled exception happens the Exception handler just log the exception message and it's stack trace but in true applications it could do something more to let the development team know about the problem that happened. 
 
 #### Data flow
-Both HTTP Request and Scheduled job tasks are similar in the way their data flow was made, they have a class that is meant to initiate the process that calls a Service class to Interact with the Repository layer while managing the business rules that are not Repository's responsibility such as retuning an empty string instead of null when there is no data stored.
+Both HTTP Request and Scheduled job tasks are similar in the way their data flow was made, they have a class that is meant to initiate the process that calls a Service class to Interact with the Repository while managing the business rules that are not Repository's responsibility such as retuning an empty string instead of null when there is no data stored.
 
 You can see an example for each one of the data flow variations in the images below:
 ![img.png](docfiles/http-request-flow-diagram.png)
@@ -110,11 +110,16 @@ When developing the key-value in-memory store (that I have labeled as "cache" on
 
 I decided to use HashMap mainly because in most uses that are made in this project it helps to avoid iterating lists and to make sure there is only one register per key or per expiration time.
 
-Here is a quick explanation about how each operation works:
+**Here is a quick explanation about how each operation works following the data flow described in the image bellow:**
+![img.png](docfiles/http-cache-sequence-diagram.png)
 1. Pushing Data: Once the data is validated, it removes any Entry in both HashMaps that can be related to the key pushed, then it creates a new Entry on the `cacheMap`. If the request have TTL, it creates/update the entry related with the expiration time to insert the cache that needs to be expired at that time.
 2. Getting Data: Once the key is defined as valid by the Controller, it gets the value from the repository or return empty. (Obs: There is no passive expiring validation in this process)
-3. Deleting Data: Once the key is defined as valid by the Controller, the respective entry is removed from the `cacheMap` and then it removes any expiring register in the other map if it exists.
-4. Expiring Data: Once the job runs, it gets the actual time and use this to get every entry in the `expirationMap` that expired before or in that exact second, then these entries are removed from the `expirationMap` and the respective cache entries are removed from the other HashMap.
+3. Deleting Data: Once the key is defined as valid by the Controller, the respective entry is removed from the `cacheMap` and then it removes any expiring register in the other map if it exists. 
+
+**There is also the expiration process that works with the following data flow:**
+![img.png](docfiles/expiration-job-sequence-diagram.png)
+
+Once the job runs, it gets the actual time and use this to get every entry in the `expirationMap` that expired before or in that exact second, then these entries are removed from the `expirationMap` and the respective cache entries are removed from the other HashMap.
 
 > Obs: I create a class `CacheEntry` that contains all the data for each cache, not just the value and there are 3 main reasons to do that:
 > 1. Since it's the same object that is saved on both HashMaps, there is only one Object in-memory for each Cache.
@@ -167,11 +172,6 @@ mvn install
 The end-to-end tests are meant to call the REST controllers and validate in the respective repositories if the data was added/modified as it was supposed to.
 
 The end-to-end tests are located on the package `com.tmg.codingchallenge.endtoendtest` in the test directory.
-
-### And integration tests
-The integration tests are meant to execute the whole application without mocking anything, but validating the REST controller response instead of the final data structure.
-
-The integrations tests are located on the package `com.tmg.codingchallenge.integrationtest` in the test directory.
 
 ## 🎈 Usage <a name="usage"></a>
 Once you get the application running you can send requests to the REST controllers using Postman, Insomnia or any other tool that allows you to make HTTP requests.
