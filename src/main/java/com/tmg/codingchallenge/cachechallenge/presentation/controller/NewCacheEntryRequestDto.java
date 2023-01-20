@@ -1,4 +1,4 @@
-package com.tmg.codingchallenge.cachechallenge.presentation;
+package com.tmg.codingchallenge.cachechallenge.presentation.controller;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewEntryRequestDto implements Serializable {
+public class NewCacheEntryRequestDto implements Serializable {
 
     @NotBlank(message = "Entry key cannot be null or empty!")
     private String key;

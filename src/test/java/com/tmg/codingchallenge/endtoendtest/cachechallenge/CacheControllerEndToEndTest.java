@@ -1,8 +1,8 @@
 package com.tmg.codingchallenge.endtoendtest.cachechallenge;
 
-import com.tmg.codingchallenge.cachechallenge.presentation.CacheApiController;
-import com.tmg.codingchallenge.cachechallenge.presentation.NewEntryRequestDto;
-import com.tmg.codingchallenge.cachechallenge.domain.CacheEntry;
+import com.tmg.codingchallenge.cachechallenge.presentation.controller.CacheController;
+import com.tmg.codingchallenge.cachechallenge.presentation.controller.NewCacheEntryRequestDto;
+import com.tmg.codingchallenge.cachechallenge.data.CacheEntry;
 import com.tmg.codingchallenge.cachechallenge.data.CacheRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,10 @@ import static org.junit.jupiter.api.Assertions.*;
  * I have decided to do these test for the challenge purpose only, in real applications I would not take this approach since it would be difficult to maintain in complex or bigger softwares.
  */
 @SpringBootTest
-class CacheApiControllerEndToEndTest {
+class CacheControllerEndToEndTest {
 
     @Autowired
-    private CacheApiController controller;
+    private CacheController controller;
 
     @Autowired
     private CacheRepository cacheRepository;
@@ -36,7 +36,7 @@ class CacheApiControllerEndToEndTest {
         // Arrange
         String cacheEntryKey = "name";
         String cacheEntryValue = "John";
-        NewEntryRequestDto requestDto = new NewEntryRequestDto(cacheEntryKey, cacheEntryValue, null);
+        NewCacheEntryRequestDto requestDto = new NewCacheEntryRequestDto(cacheEntryKey, cacheEntryValue, null);
         Map<String, CacheEntry> cacheEntryMap = getCacheEntryMap();
         Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
 
@@ -63,7 +63,7 @@ class CacheApiControllerEndToEndTest {
         // Arrange
         String cacheEntryValue = "John";
         String cacheEntryKey = "name";
-        NewEntryRequestDto requestDto = new NewEntryRequestDto(cacheEntryKey, cacheEntryValue, null);
+        NewCacheEntryRequestDto requestDto = new NewCacheEntryRequestDto(cacheEntryKey, cacheEntryValue, null);
         controller.postEntry(requestDto);
 
         // Act
@@ -95,7 +95,7 @@ class CacheApiControllerEndToEndTest {
         String cacheEntryKey = "name";
         String cacheEntryValue = "Larry";
         long cacheEntryTTL = 30L;
-        NewEntryRequestDto requestDto = new NewEntryRequestDto(cacheEntryKey, cacheEntryValue, cacheEntryTTL);
+        NewCacheEntryRequestDto requestDto = new NewCacheEntryRequestDto(cacheEntryKey, cacheEntryValue, cacheEntryTTL);
         Map<String, CacheEntry> cacheEntryMap = getCacheEntryMap();
         Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
         LocalDateTime beforeCreationTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
@@ -133,7 +133,7 @@ class CacheApiControllerEndToEndTest {
         String cacheEntryKey = "name";
         String cacheEntryValue = "Larry";
         long cacheEntryTTL = 30L;
-        NewEntryRequestDto requestDto = new NewEntryRequestDto(cacheEntryKey, cacheEntryValue, cacheEntryTTL);
+        NewCacheEntryRequestDto requestDto = new NewCacheEntryRequestDto(cacheEntryKey, cacheEntryValue, cacheEntryTTL);
 
         controller.postEntry(requestDto);
 

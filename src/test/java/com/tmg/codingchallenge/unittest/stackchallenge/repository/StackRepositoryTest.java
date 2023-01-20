@@ -1,7 +1,7 @@
 package com.tmg.codingchallenge.unittest.stackchallenge.repository;
 
-import com.tmg.codingchallenge.stackchallenge.domain.CustomStack;
-import com.tmg.codingchallenge.stackchallenge.data.StackRepository;
+import com.tmg.codingchallenge.cachechallenge.data.CustomStack;
+import com.tmg.codingchallenge.cachechallenge.data.StackRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

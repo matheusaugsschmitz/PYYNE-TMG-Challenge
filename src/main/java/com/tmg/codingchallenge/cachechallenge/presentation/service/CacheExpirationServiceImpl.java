@@ -1,4 +1,4 @@
-package com.tmg.codingchallenge.cachechallenge.service;
+package com.tmg.codingchallenge.cachechallenge.presentation.service;
 
 import com.tmg.codingchallenge.cachechallenge.data.CacheRepository;
 import lombok.RequiredArgsConstructor;

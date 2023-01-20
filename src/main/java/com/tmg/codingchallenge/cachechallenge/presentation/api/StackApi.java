@@ -1,5 +1,6 @@
-package com.tmg.codingchallenge.stackchallenge.presentation;
+package com.tmg.codingchallenge.cachechallenge.presentation.api;
 
+import com.tmg.codingchallenge.cachechallenge.presentation.controller.NewStackItemRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

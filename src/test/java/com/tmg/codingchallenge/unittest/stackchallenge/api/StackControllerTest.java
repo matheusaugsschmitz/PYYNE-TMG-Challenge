@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tmg.codingchallenge.global.dto.ArgumentErrorDto;
 import com.tmg.codingchallenge.global.dto.ArgumentExceptionResponseDto;
-import com.tmg.codingchallenge.stackchallenge.presentation.StackApiController;
-import com.tmg.codingchallenge.stackchallenge.presentation.NewStackItemRequestDto;
-import com.tmg.codingchallenge.stackchallenge.service.StackService;
+import com.tmg.codingchallenge.cachechallenge.presentation.controller.StackController;
+import com.tmg.codingchallenge.cachechallenge.presentation.controller.NewStackItemRequestDto;
+import com.tmg.codingchallenge.cachechallenge.presentation.service.StackService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -26,8 +26,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@WebMvcTest(StackApiController.class)
-class StackApiControllerTest {
+@WebMvcTest(StackController.class)
+class StackControllerTest {
 
     @Autowired
     private MockMvc mvc;

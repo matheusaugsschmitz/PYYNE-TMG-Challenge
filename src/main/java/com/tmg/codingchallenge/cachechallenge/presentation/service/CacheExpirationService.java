@@ -1,4 +1,4 @@
-package com.tmg.codingchallenge.cachechallenge.service;
+package com.tmg.codingchallenge.cachechallenge.presentation.service;
 
 public interface CacheExpirationService {
 

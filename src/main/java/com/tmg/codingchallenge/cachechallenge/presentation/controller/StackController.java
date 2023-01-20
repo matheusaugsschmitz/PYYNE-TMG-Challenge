@@ -1,6 +1,7 @@
-package com.tmg.codingchallenge.stackchallenge.presentation;
+package com.tmg.codingchallenge.cachechallenge.presentation.controller;
 
-import com.tmg.codingchallenge.stackchallenge.service.StackService;
+import com.tmg.codingchallenge.cachechallenge.presentation.api.StackApi;
+import com.tmg.codingchallenge.cachechallenge.presentation.service.StackService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/stack")
 @RequiredArgsConstructor
-public class StackApiController implements StackApi {
+public class StackController implements StackApi {
 
     private final StackService stackService;
 

@@ -1,6 +1,6 @@
-package com.tmg.codingchallenge.cachechallenge.job;
+package com.tmg.codingchallenge.cachechallenge.presentation.job;
 
-import com.tmg.codingchallenge.cachechallenge.service.CacheExpirationService;
+import com.tmg.codingchallenge.cachechallenge.presentation.service.CacheExpirationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

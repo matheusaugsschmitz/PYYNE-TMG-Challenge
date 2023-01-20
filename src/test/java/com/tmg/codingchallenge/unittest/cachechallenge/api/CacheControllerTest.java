@@ -2,9 +2,9 @@ package com.tmg.codingchallenge.unittest.cachechallenge.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tmg.codingchallenge.cachechallenge.presentation.CacheApiController;
-import com.tmg.codingchallenge.cachechallenge.presentation.NewEntryRequestDto;
-import com.tmg.codingchallenge.cachechallenge.service.CacheService;
+import com.tmg.codingchallenge.cachechallenge.presentation.controller.CacheController;
+import com.tmg.codingchallenge.cachechallenge.presentation.controller.NewCacheEntryRequestDto;
+import com.tmg.codingchallenge.cachechallenge.presentation.service.CacheService;
 import com.tmg.codingchallenge.global.dto.ArgumentErrorDto;
 import com.tmg.codingchallenge.global.dto.ArgumentExceptionResponseDto;
 import org.junit.jupiter.api.Test;
@@ -30,8 +30,8 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
-@WebMvcTest(CacheApiController.class)
-class CacheApiControllerTest {
+@WebMvcTest(CacheController.class)
+class CacheControllerTest {
 
     @Autowired
     private MockMvc mvc;
@@ -40,7 +40,7 @@ class CacheApiControllerTest {
     private CacheService cacheService;
 
     @Captor
-    private ArgumentCaptor<NewEntryRequestDto> newEntryRequestDtoArgumentCaptor;
+    private ArgumentCaptor<NewCacheEntryRequestDto> newEntryRequestDtoArgumentCaptor;
 
     @Test
     void postEntryWithoutTTL_withSuccessResponse() throws Exception {
@@ -161,7 +161,7 @@ class CacheApiControllerTest {
     void deleteEntryForExistentKey_withSuccess() throws Exception {
         // Arrange
         String entryKey = "delete_test_key";
-        NewEntryRequestDto requestDto = new NewEntryRequestDto(entryKey, "random_value", null);
+        NewCacheEntryRequestDto requestDto = new NewCacheEntryRequestDto(entryKey, "random_value", null);
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(requestDto);
         mvc.perform(post("/cache")
@@ -209,7 +209,7 @@ class CacheApiControllerTest {
 
     private void testPostCacheWithSuccessResponse(String cacheEntryKey, String cacheEntryValue, Long ttl) throws Exception {
         // Arrange
-        NewEntryRequestDto requestDto = new NewEntryRequestDto(cacheEntryKey, cacheEntryValue, ttl);
+        NewCacheEntryRequestDto requestDto = new NewCacheEntryRequestDto(cacheEntryKey, cacheEntryValue, ttl);
 
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(requestDto);
@@ -226,7 +226,7 @@ class CacheApiControllerTest {
         assertEquals("", response.getContentAsString());
 
         verify(cacheService).pushEntry(newEntryRequestDtoArgumentCaptor.capture());
-        NewEntryRequestDto capturedEntryRequestDto = newEntryRequestDtoArgumentCaptor.getValue();
+        NewCacheEntryRequestDto capturedEntryRequestDto = newEntryRequestDtoArgumentCaptor.getValue();
         assertThat(capturedEntryRequestDto).usingRecursiveComparison().isEqualTo(requestDto);
 
         verifyNoMoreInteractions(cacheService);
@@ -235,7 +235,7 @@ class CacheApiControllerTest {
 
     private void testPostCacheWithInvalidArgument(String cacheEntryKey, String cacheEntryValue, Long ttl, String fieldWithError, String expectedErrorMessage) throws Exception {
         // Arrange
-        NewEntryRequestDto requestDto = new NewEntryRequestDto(cacheEntryKey, cacheEntryValue, ttl);
+        NewCacheEntryRequestDto requestDto = new NewCacheEntryRequestDto(cacheEntryKey, cacheEntryValue, ttl);
 
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(requestDto);

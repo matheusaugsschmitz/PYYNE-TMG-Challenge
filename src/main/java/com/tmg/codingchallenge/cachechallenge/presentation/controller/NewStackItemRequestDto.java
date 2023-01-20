@@ -1,4 +1,4 @@
-package com.tmg.codingchallenge.stackchallenge.presentation;
+package com.tmg.codingchallenge.cachechallenge.presentation.controller;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

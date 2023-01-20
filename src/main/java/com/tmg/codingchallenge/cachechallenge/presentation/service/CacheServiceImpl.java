@@ -1,7 +1,7 @@
-package com.tmg.codingchallenge.cachechallenge.service;
+package com.tmg.codingchallenge.cachechallenge.presentation.service;
 
-import com.tmg.codingchallenge.cachechallenge.presentation.NewEntryRequestDto;
-import com.tmg.codingchallenge.cachechallenge.domain.CacheEntry;
+import com.tmg.codingchallenge.cachechallenge.presentation.controller.NewCacheEntryRequestDto;
+import com.tmg.codingchallenge.cachechallenge.data.CacheEntry;
 import com.tmg.codingchallenge.cachechallenge.data.CacheRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ public class CacheServiceImpl implements CacheService {
     private final CacheRepository repository;
 
     @Override
-    public void pushEntry(NewEntryRequestDto requestDto) {
+    public void pushEntry(NewCacheEntryRequestDto requestDto) {
         final String cacheKey = requestDto.getKey();
         removeEntryByKey(cacheKey);
         final CacheEntry newCacheEntry = new CacheEntry(cacheKey, requestDto.getValue(), requestDto.getTtl());

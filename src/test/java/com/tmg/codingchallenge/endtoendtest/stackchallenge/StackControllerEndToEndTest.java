@@ -1,9 +1,9 @@
 package com.tmg.codingchallenge.endtoendtest.stackchallenge;
 
-import com.tmg.codingchallenge.stackchallenge.presentation.StackApiController;
-import com.tmg.codingchallenge.stackchallenge.presentation.NewStackItemRequestDto;
-import com.tmg.codingchallenge.stackchallenge.domain.CustomStack;
-import com.tmg.codingchallenge.stackchallenge.data.StackRepository;
+import com.tmg.codingchallenge.cachechallenge.presentation.controller.StackController;
+import com.tmg.codingchallenge.cachechallenge.presentation.controller.NewStackItemRequestDto;
+import com.tmg.codingchallenge.cachechallenge.data.CustomStack;
+import com.tmg.codingchallenge.cachechallenge.data.StackRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,10 +17,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * I have decided to do these test for the challenge purpose only, in real applications I would not take this approach since it would be difficult to maintain in complex or bigger softwares.
  */
 @SpringBootTest
-class StackApiControllerEndToEndTest {
+class StackControllerEndToEndTest {
 
     @Autowired
-    private StackApiController controller;
+    private StackController controller;
 
     @Autowired
     private StackRepository stackRepository;
