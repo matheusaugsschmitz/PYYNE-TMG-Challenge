@@ -1,9 +1,9 @@
 package com.tmg.codingchallenge.endtoendtest.stackchallenge;
 
-import com.tmg.codingchallenge.cachechallenge.presentation.controller.StackController;
-import com.tmg.codingchallenge.cachechallenge.presentation.controller.NewStackItemRequestDto;
-import com.tmg.codingchallenge.cachechallenge.data.CustomStack;
-import com.tmg.codingchallenge.cachechallenge.data.StackRepository;
+import com.tmg.codingchallenge.presentation.controller.StackController;
+import com.tmg.codingchallenge.presentation.controller.NewStackItemRequestDto;
+import com.tmg.codingchallenge.data.CustomStack;
+import com.tmg.codingchallenge.data.StackRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

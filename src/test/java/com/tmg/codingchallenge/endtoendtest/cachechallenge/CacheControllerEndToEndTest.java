@@ -1,9 +1,9 @@
 package com.tmg.codingchallenge.endtoendtest.cachechallenge;
 
-import com.tmg.codingchallenge.cachechallenge.presentation.controller.CacheController;
-import com.tmg.codingchallenge.cachechallenge.presentation.controller.NewCacheEntryRequestDto;
-import com.tmg.codingchallenge.cachechallenge.data.CacheEntry;
-import com.tmg.codingchallenge.cachechallenge.data.CacheRepository;
+import com.tmg.codingchallenge.presentation.controller.CacheController;
+import com.tmg.codingchallenge.presentation.controller.NewCacheEntryRequestDto;
+import com.tmg.codingchallenge.data.CacheEntry;
+import com.tmg.codingchallenge.data.CacheRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
