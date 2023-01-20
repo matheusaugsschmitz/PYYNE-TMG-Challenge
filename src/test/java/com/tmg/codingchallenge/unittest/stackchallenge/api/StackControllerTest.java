@@ -2,11 +2,11 @@ package com.tmg.codingchallenge.unittest.stackchallenge.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tmg.codingchallenge.global.dto.ArgumentErrorDto;
-import com.tmg.codingchallenge.global.dto.ArgumentExceptionResponseDto;
-import com.tmg.codingchallenge.cachechallenge.presentation.controller.StackController;
-import com.tmg.codingchallenge.cachechallenge.presentation.controller.NewStackItemRequestDto;
-import com.tmg.codingchallenge.cachechallenge.presentation.service.StackService;
+import com.tmg.codingchallenge.presentation.config.dto.ArgumentErrorDto;
+import com.tmg.codingchallenge.presentation.config.dto.ArgumentExceptionResponseDto;
+import com.tmg.codingchallenge.presentation.controller.StackController;
+import com.tmg.codingchallenge.presentation.controller.NewStackItemRequestDto;
+import com.tmg.codingchallenge.presentation.service.StackService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

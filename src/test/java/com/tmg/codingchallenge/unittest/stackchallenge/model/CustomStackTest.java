@@ -1,6 +1,6 @@
 package com.tmg.codingchallenge.unittest.stackchallenge.model;
 
-import com.tmg.codingchallenge.cachechallenge.data.CustomStack;
+import com.tmg.codingchallenge.data.CustomStack;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 

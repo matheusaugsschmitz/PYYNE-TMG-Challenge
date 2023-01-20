@@ -2,11 +2,11 @@ package com.tmg.codingchallenge.unittest.cachechallenge.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tmg.codingchallenge.cachechallenge.presentation.controller.CacheController;
-import com.tmg.codingchallenge.cachechallenge.presentation.controller.NewCacheEntryRequestDto;
-import com.tmg.codingchallenge.cachechallenge.presentation.service.CacheService;
-import com.tmg.codingchallenge.global.dto.ArgumentErrorDto;
-import com.tmg.codingchallenge.global.dto.ArgumentExceptionResponseDto;
+import com.tmg.codingchallenge.presentation.controller.CacheController;
+import com.tmg.codingchallenge.presentation.controller.NewCacheEntryRequestDto;
+import com.tmg.codingchallenge.presentation.service.CacheService;
+import com.tmg.codingchallenge.presentation.config.dto.ArgumentErrorDto;
+import com.tmg.codingchallenge.presentation.config.dto.ArgumentExceptionResponseDto;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;

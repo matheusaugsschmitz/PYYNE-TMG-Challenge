@@ -1,7 +1,7 @@
 package com.tmg.codingchallenge.unittest.global.converter;
 
-import com.tmg.codingchallenge.global.converter.ArgumentErrorConverter;
-import com.tmg.codingchallenge.global.dto.ArgumentErrorDto;
+import com.tmg.codingchallenge.presentation.config.converter.ArgumentErrorConverter;
+import com.tmg.codingchallenge.presentation.config.dto.ArgumentErrorDto;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Path;
 import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
