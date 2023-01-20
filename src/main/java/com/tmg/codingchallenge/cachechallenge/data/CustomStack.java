@@ -1,4 +1,4 @@
-package com.tmg.codingchallenge.stackchallenge.domain;
+package com.tmg.codingchallenge.cachechallenge.data;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

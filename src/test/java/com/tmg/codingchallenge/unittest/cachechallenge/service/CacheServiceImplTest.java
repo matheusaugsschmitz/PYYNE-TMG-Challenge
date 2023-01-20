@@ -1,9 +1,9 @@
 package com.tmg.codingchallenge.unittest.cachechallenge.service;
 
-import com.tmg.codingchallenge.cachechallenge.presentation.NewEntryRequestDto;
-import com.tmg.codingchallenge.cachechallenge.domain.CacheEntry;
+import com.tmg.codingchallenge.cachechallenge.presentation.controller.NewCacheEntryRequestDto;
+import com.tmg.codingchallenge.cachechallenge.data.CacheEntry;
 import com.tmg.codingchallenge.cachechallenge.data.CacheRepository;
-import com.tmg.codingchallenge.cachechallenge.service.CacheServiceImpl;
+import com.tmg.codingchallenge.cachechallenge.presentation.service.CacheServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -36,7 +36,7 @@ class CacheServiceImplTest {
         String entryKey = "name";
         String entryValue = "Josias";
 
-        NewEntryRequestDto requestDto = new NewEntryRequestDto(entryKey, entryValue, null);
+        NewCacheEntryRequestDto requestDto = new NewCacheEntryRequestDto(entryKey, entryValue, null);
 
         // Act
         service.pushEntry(requestDto);
@@ -60,7 +60,7 @@ class CacheServiceImplTest {
         String entryKey = "name";
         String entryValue = "Jonas";
         Long entryTTL = 50L;
-        NewEntryRequestDto requestDto = new NewEntryRequestDto(entryKey, entryValue, entryTTL);
+        NewCacheEntryRequestDto requestDto = new NewCacheEntryRequestDto(entryKey, entryValue, entryTTL);
 
         LocalDateTime mockedTime = LocalDateTime.now();
         LocalDateTime expectedExpirationTime = mockedTime.truncatedTo(ChronoUnit.SECONDS).plus(entryTTL, ChronoUnit.SECONDS);

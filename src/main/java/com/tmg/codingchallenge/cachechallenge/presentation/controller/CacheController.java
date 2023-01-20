@@ -1,6 +1,7 @@
-package com.tmg.codingchallenge.cachechallenge.presentation;
+package com.tmg.codingchallenge.cachechallenge.presentation.controller;
 
-import com.tmg.codingchallenge.cachechallenge.service.CacheService;
+import com.tmg.codingchallenge.cachechallenge.presentation.api.CacheApi;
+import com.tmg.codingchallenge.cachechallenge.presentation.service.CacheService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -11,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/cache")
-public class CacheApiController implements CacheApi {
+public class CacheController implements CacheApi {
 
     private final CacheService cacheService;
 
     @Override
     @PostMapping
-    public void postEntry(@RequestBody @Valid NewEntryRequestDto requestDto) {
+    public void postEntry(@RequestBody @Valid NewCacheEntryRequestDto requestDto) {
         cacheService.pushEntry(requestDto);
     }
 

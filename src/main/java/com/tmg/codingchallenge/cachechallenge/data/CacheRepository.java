@@ -1,6 +1,5 @@
 package com.tmg.codingchallenge.cachechallenge.data;
 
-import com.tmg.codingchallenge.cachechallenge.domain.CacheEntry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

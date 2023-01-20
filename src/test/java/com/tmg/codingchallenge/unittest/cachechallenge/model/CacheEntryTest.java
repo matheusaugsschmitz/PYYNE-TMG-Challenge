@@ -1,6 +1,6 @@
 package com.tmg.codingchallenge.unittest.cachechallenge.model;
 
-import com.tmg.codingchallenge.cachechallenge.domain.CacheEntry;
+import com.tmg.codingchallenge.cachechallenge.data.CacheEntry;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 

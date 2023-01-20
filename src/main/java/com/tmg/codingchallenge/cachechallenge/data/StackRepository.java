@@ -1,6 +1,5 @@
-package com.tmg.codingchallenge.stackchallenge.data;
+package com.tmg.codingchallenge.cachechallenge.data;
 
-import com.tmg.codingchallenge.stackchallenge.domain.CustomStack;
 import org.springframework.stereotype.Component;
 
 @Component

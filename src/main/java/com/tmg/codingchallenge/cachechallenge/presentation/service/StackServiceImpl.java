@@ -1,6 +1,6 @@
-package com.tmg.codingchallenge.stackchallenge.service;
+package com.tmg.codingchallenge.cachechallenge.presentation.service;
 
-import com.tmg.codingchallenge.stackchallenge.data.StackRepository;
+import com.tmg.codingchallenge.cachechallenge.data.StackRepository;
 import com.tmg.codingchallenge.global.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

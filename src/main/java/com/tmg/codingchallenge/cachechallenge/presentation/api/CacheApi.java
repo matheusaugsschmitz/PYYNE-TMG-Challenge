@@ -1,5 +1,6 @@
-package com.tmg.codingchallenge.cachechallenge.presentation;
+package com.tmg.codingchallenge.cachechallenge.presentation.api;
 
+import com.tmg.codingchallenge.cachechallenge.presentation.controller.NewCacheEntryRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,7 +20,7 @@ public interface CacheApi {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "400", description = "Invalid request body")
     })
-    void postEntry(@Parameter(description = "Cache entry data.", required = true) @RequestBody @Valid NewEntryRequestDto requestDto);
+    void postEntry(@Parameter(description = "Cache entry data.", required = true) @RequestBody @Valid NewCacheEntryRequestDto requestDto);
 
     @Operation(summary = "Retrieve the value of a specific entry in the key-value in-memory storage system querying but it's key. Returns an empty String if the key doesn't exists.", tags = "KeyValueStorage")
     @ApiResponses(value = {
