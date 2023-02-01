@@ -12,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,9 +28,6 @@ class CacheRepositoryTest {
     void clearAllStoredEntries() {
         Map<String, CacheEntry> cacheEntryMap = getCacheEntryMap();
         cacheEntryMap.clear();
-
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
-        cacheExpirationEntryMap.clear();
     }
 
     @Test
@@ -41,14 +37,11 @@ class CacheRepositoryTest {
         String cacheEntryValue = "Brandon";
         CacheEntry cacheEntry = new CacheEntry(cacheEntryKey, cacheEntryValue, null);
         Map<String, CacheEntry> cacheEntryMap = getCacheEntryMap();
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
 
         // Act
         repository.save(cacheEntry);
 
         // Assert
-        assertTrue(cacheExpirationEntryMap.isEmpty());
-
         assertEquals(1, cacheEntryMap.size());
 
         CacheEntry nameCacheEntry = cacheEntryMap.get(cacheEntryKey);
@@ -107,6 +100,30 @@ class CacheRepositoryTest {
 
 
     @Test
+    void getOptionalValueByKeyWithTTLExpired_withNoEmptyReturn() {
+        // Arrange
+        String cacheEntryValue = "Garry";
+        String cacheEntryKey = "name";
+        LocalDateTime localDateTimeForExpiredEntry = getLocalDateTimeForExpiredEntry();
+        CacheEntry cacheEntry;
+        try (MockedStatic<LocalDateTime> mock = mockStatic(LocalDateTime.class)) {
+            mock.when(LocalDateTime::now).thenReturn(localDateTimeForExpiredEntry);
+
+            cacheEntry = new CacheEntry(cacheEntryKey, cacheEntryValue, 150L);
+        }
+
+        Map<String, CacheEntry> cacheEntryMap = getCacheEntryMap();
+        cacheEntryMap.put(cacheEntryKey, cacheEntry);
+
+        // Act
+        Optional<String> response = repository.getOptionalValueByKey(cacheEntryKey);
+
+        // Assert
+        assertTrue(response.isEmpty());
+    }
+
+
+    @Test
     void saveNameWithTTL_withSuccess() {
         // Arrange
         String cacheEntryKey = "name";
@@ -114,7 +131,6 @@ class CacheRepositoryTest {
         long cacheEntryTTL = 30L;
         CacheEntry cacheEntry = new CacheEntry(cacheEntryKey, cacheEntryValue, cacheEntryTTL);
         Map<String, CacheEntry> cacheEntryMap = getCacheEntryMap();
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
 
         // Act
         repository.save(cacheEntry);
@@ -124,13 +140,6 @@ class CacheRepositoryTest {
 
         CacheEntry nameCacheEntry = cacheEntryMap.get(cacheEntryKey);
         assertEquals(cacheEntry, nameCacheEntry);
-
-        assertEquals(1, cacheExpirationEntryMap.size());
-
-        Map<String, CacheEntry> expirationCacheEntry = cacheExpirationEntryMap.get(nameCacheEntry.getExpiresAt());
-        assertEquals(1, expirationCacheEntry.size());
-
-        assertEquals(cacheEntry, expirationCacheEntry.get(cacheEntryKey));
     }
 
     @Test
@@ -148,9 +157,6 @@ class CacheRepositoryTest {
 
         // Assert
         assertTrue(cacheEntryMap.isEmpty());
-
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
-        assertTrue(cacheExpirationEntryMap.isEmpty());
     }
 
     @Test
@@ -164,17 +170,11 @@ class CacheRepositoryTest {
         Map<String, CacheEntry> cacheEntryMap = getCacheEntryMap();
         cacheEntryMap.put(cacheEntryKey, cacheEntry);
 
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
-        HashMap<String, CacheEntry> expirationEntryMap = new HashMap<>();
-        expirationEntryMap.put(cacheEntryKey, cacheEntry);
-        cacheExpirationEntryMap.put(cacheEntry.getExpiresAt(), expirationEntryMap);
-
         // Act
         repository.deleteByKey(cacheEntryKey);
 
         // Assert
         assertTrue(cacheEntryMap.isEmpty());
-        assertTrue(cacheExpirationEntryMap.isEmpty());
     }
 
     @Test
@@ -198,9 +198,6 @@ class CacheRepositoryTest {
         // Assert
         assertEquals(1, cacheEntryMap.size());
         assertEquals(secondCacheEntry, cacheEntryMap.get(secondCacheEntryKey));
-
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
-        assertTrue(cacheExpirationEntryMap.isEmpty());
     }
 
     @Test
@@ -213,11 +210,6 @@ class CacheRepositoryTest {
         CacheEntry firstCacheEntry = new CacheEntry(firstCacheEntryKey, firstCacheEntryValue, 30L);
         cacheEntryMap.put(firstCacheEntryKey, firstCacheEntry);
 
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
-        HashMap<String, CacheEntry> expirationEntryMap = new HashMap<>();
-        expirationEntryMap.put(firstCacheEntryKey, firstCacheEntry);
-        cacheExpirationEntryMap.put(firstCacheEntry.getExpiresAt(), expirationEntryMap);
-
         String secondCacheEntryKey = "age";
         String secondCacheEntryValue = "23";
         CacheEntry secondCacheEntry = new CacheEntry(secondCacheEntryKey, secondCacheEntryValue, null);
@@ -229,8 +221,6 @@ class CacheRepositoryTest {
         // Assert
         assertEquals(1, cacheEntryMap.size());
         assertEquals(secondCacheEntry, cacheEntryMap.get(secondCacheEntryKey));
-
-        assertTrue(cacheExpirationEntryMap.isEmpty());
     }
 
     @Test
@@ -243,11 +233,6 @@ class CacheRepositoryTest {
         CacheEntry firstCacheEntry = new CacheEntry(firstCacheEntryKey, firstCacheEntryValue, 30L);
         cacheEntryMap.put(firstCacheEntryKey, firstCacheEntry);
 
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
-        HashMap<String, CacheEntry> expirationEntryMap = new HashMap<>();
-        expirationEntryMap.put(firstCacheEntryKey, firstCacheEntry);
-        cacheExpirationEntryMap.put(firstCacheEntry.getExpiresAt(), expirationEntryMap);
-
         String secondCacheEntryKey = "age";
         String secondCacheEntryValue = "23";
         CacheEntry secondCacheEntry = new CacheEntry(secondCacheEntryKey, secondCacheEntryValue, null);
@@ -259,11 +244,6 @@ class CacheRepositoryTest {
         // Assert
         assertEquals(1, cacheEntryMap.size());
         assertEquals(firstCacheEntry, cacheEntryMap.get(firstCacheEntryKey));
-
-        assertEquals(1, cacheExpirationEntryMap.size());
-
-        Map<String, CacheEntry> savedCacheExpirationEntries = cacheExpirationEntryMap.get(firstCacheEntry.getExpiresAt());
-        assertEquals(firstCacheEntry, savedCacheExpirationEntries.get(firstCacheEntryKey));
     }
 
     @Test
@@ -276,11 +256,6 @@ class CacheRepositoryTest {
         CacheEntry firstCacheEntry = new CacheEntry(firstCacheEntryKey, firstCacheEntryValue, 30L);
         cacheEntryMap.put(firstCacheEntryKey, firstCacheEntry);
 
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
-        HashMap<String, CacheEntry> expirationEntryMap = new HashMap<>();
-        expirationEntryMap.put(firstCacheEntryKey, firstCacheEntry);
-        cacheExpirationEntryMap.put(firstCacheEntry.getExpiresAt(), expirationEntryMap);
-
         String secondCacheEntryKey = "age";
         String secondCacheEntryValue = "23";
         CacheEntry secondCacheEntry = new CacheEntry(secondCacheEntryKey, secondCacheEntryValue, 20L);
@@ -292,11 +267,6 @@ class CacheRepositoryTest {
         // Assert
         assertEquals(1, cacheEntryMap.size());
         assertEquals(firstCacheEntry, cacheEntryMap.get(firstCacheEntryKey));
-
-        assertEquals(1, cacheExpirationEntryMap.size());
-
-        Map<String, CacheEntry> savedCacheExpirationEntries = cacheExpirationEntryMap.get(firstCacheEntry.getExpiresAt());
-        assertEquals(firstCacheEntry, savedCacheExpirationEntries.get(firstCacheEntryKey));
     }
 
     @Test
@@ -315,9 +285,6 @@ class CacheRepositoryTest {
         // Assert
         assertEquals(1, cacheEntryMap.size());
         assertEquals(cacheEntry, cacheEntryMap.get(cacheEntryKey));
-
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
-        assertTrue(cacheExpirationEntryMap.isEmpty());
     }
 
     @Test
@@ -331,24 +298,12 @@ class CacheRepositoryTest {
         Map<String, CacheEntry> cacheEntryMap = getCacheEntryMap();
         cacheEntryMap.put(cacheEntryKey, cacheEntry);
 
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryByMoment = getCacheExpirationEntryMap();
-        HashMap<String, CacheEntry> expirationEntryMap = new HashMap<>();
-        expirationEntryMap.put(cacheEntryKey, cacheEntry);
-        cacheExpirationEntryByMoment.put(cacheEntry.getExpiresAt(), expirationEntryMap);
-
         // Act
         repository.deleteByExpirationTime(LocalDateTime.now());
 
         // Assert
         assertEquals(1, cacheEntryMap.size());
         assertEquals(cacheEntry, cacheEntryMap.get(cacheEntryKey));
-
-        assertEquals(1, cacheExpirationEntryByMoment.size());
-
-        Map<String, CacheEntry> cacheExpirationEntriesByKey = cacheExpirationEntryByMoment.get(cacheEntry.getExpiresAt());
-        assertEquals(1, cacheExpirationEntriesByKey.size());
-
-        assertEquals(cacheEntry, cacheExpirationEntriesByKey.get(cacheEntryKey));
     }
 
     @Test
@@ -373,9 +328,6 @@ class CacheRepositoryTest {
         assertEquals(2, cacheEntryMap.size());
         assertEquals(firstCacheEntry, cacheEntryMap.get(firstCacheEntryKey));
         assertEquals(secondCacheEntry, cacheEntryMap.get(secondCacheEntryKey));
-
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
-        assertTrue(cacheExpirationEntryMap.isEmpty());
     }
 
     @Test
@@ -393,15 +345,6 @@ class CacheRepositoryTest {
         CacheEntry secondCacheEntry = new CacheEntry(secondCacheEntryKey, secondCacheEntryValue, 300L);
         cacheEntryMap.put(secondCacheEntryKey, secondCacheEntry);
 
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
-        HashMap<String, CacheEntry> firstExpirationEntryMap = new HashMap<>();
-        firstExpirationEntryMap.put(firstCacheEntryKey, firstCacheEntry);
-        cacheExpirationEntryMap.put(firstCacheEntry.getExpiresAt(), firstExpirationEntryMap);
-
-        HashMap<String, CacheEntry> secondExpirationEntryMap = new HashMap<>();
-        secondExpirationEntryMap.put(secondCacheEntryKey, secondCacheEntry);
-        cacheExpirationEntryMap.put(secondCacheEntry.getExpiresAt(), secondExpirationEntryMap);
-
         // Act
         repository.deleteByExpirationTime(LocalDateTime.now());
 
@@ -409,16 +352,6 @@ class CacheRepositoryTest {
         assertEquals(2, cacheEntryMap.size());
         assertEquals(firstCacheEntry, cacheEntryMap.get(firstCacheEntryKey));
         assertEquals(secondCacheEntry, cacheEntryMap.get(secondCacheEntryKey));
-
-        assertEquals(2, cacheExpirationEntryMap.size());
-
-        Map<String, CacheEntry> firstExpirationTimeEntries = cacheExpirationEntryMap.get(firstCacheEntry.getExpiresAt());
-        assertEquals(1, firstExpirationTimeEntries.size());
-        assertEquals(firstCacheEntry, firstExpirationTimeEntries.get(firstCacheEntryKey));
-
-        Map<String, CacheEntry> secondExpirationTimeEntries = cacheExpirationEntryMap.get(secondCacheEntry.getExpiresAt());
-        assertEquals(1, secondExpirationTimeEntries.size());
-        assertEquals(secondCacheEntry, secondExpirationTimeEntries.get(secondCacheEntryKey));
     }
 
     @Test
@@ -442,14 +375,34 @@ class CacheRepositoryTest {
         CacheEntry secondCacheEntry = new CacheEntry(secondCacheEntryKey, secondCacheEntryValue, 300L);
         cacheEntryMap.put(secondCacheEntryKey, secondCacheEntry);
 
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
-        HashMap<String, CacheEntry> firstExpirationEntryMap = new HashMap<>();
-        firstExpirationEntryMap.put(firstCacheEntryKey, firstCacheEntry);
-        cacheExpirationEntryMap.put(firstCacheEntry.getExpiresAt(), firstExpirationEntryMap);
+        // Act
+        repository.deleteByExpirationTime(LocalDateTime.now());
 
-        HashMap<String, CacheEntry> secondExpirationEntryMap = new HashMap<>();
-        secondExpirationEntryMap.put(secondCacheEntryKey, secondCacheEntry);
-        cacheExpirationEntryMap.put(secondCacheEntry.getExpiresAt(), secondExpirationEntryMap);
+        // Assert
+        assertEquals(1, cacheEntryMap.size());
+        assertEquals(secondCacheEntry, cacheEntryMap.get(secondCacheEntryKey));
+    }
+
+    @Test
+    void deleteByExpirationTimeWithMultipleKeysAndTTLExpiredInOneButExpiringAnotherTime_withSuccess() {
+        // Arrange
+        Map<String, CacheEntry> cacheEntryMap = getCacheEntryMap();
+
+        String firstCacheEntryKey = "name";
+        String firstCacheEntryValue = "Jonathan";
+        CacheEntry firstCacheEntry;
+        LocalDateTime localDateTimeForExpiredEntry = getLocalDateTimeForExpiredEntry();
+        try (MockedStatic<LocalDateTime> mock = mockStatic(LocalDateTime.class)) {
+            mock.when(LocalDateTime::now).thenReturn(localDateTimeForExpiredEntry);
+
+            firstCacheEntry = new CacheEntry(firstCacheEntryKey, firstCacheEntryValue, 50L);
+        }
+        cacheEntryMap.put(firstCacheEntryKey, firstCacheEntry);
+
+        String secondCacheEntryKey = "age";
+        String secondCacheEntryValue = "23";
+        CacheEntry secondCacheEntry = new CacheEntry(secondCacheEntryKey, secondCacheEntryValue, 300L);
+        cacheEntryMap.put(secondCacheEntryKey, secondCacheEntry);
 
         // Act
         repository.deleteByExpirationTime(LocalDateTime.now());
@@ -457,12 +410,6 @@ class CacheRepositoryTest {
         // Assert
         assertEquals(1, cacheEntryMap.size());
         assertEquals(secondCacheEntry, cacheEntryMap.get(secondCacheEntryKey));
-
-        assertEquals(1, cacheExpirationEntryMap.size());
-
-        Map<String, CacheEntry> secondExpirationTimeEntries = cacheExpirationEntryMap.get(secondCacheEntry.getExpiresAt());
-        assertEquals(1, secondExpirationTimeEntries.size());
-        assertEquals(secondCacheEntry, secondExpirationTimeEntries.get(secondCacheEntryKey));
     }
 
     @Test
@@ -488,22 +435,11 @@ class CacheRepositoryTest {
         cacheEntryMap.put(firstCacheEntryKey, firstCacheEntry);
         cacheEntryMap.put(secondCacheEntryKey, secondCacheEntry);
 
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
-        HashMap<String, CacheEntry> firstExpirationEntryMap = new HashMap<>();
-        firstExpirationEntryMap.put(firstCacheEntryKey, firstCacheEntry);
-        cacheExpirationEntryMap.put(firstCacheEntry.getExpiresAt(), firstExpirationEntryMap);
-
-        HashMap<String, CacheEntry> secondExpirationEntryMap = new HashMap<>();
-        secondExpirationEntryMap.put(secondCacheEntryKey, secondCacheEntry);
-        cacheExpirationEntryMap.put(secondCacheEntry.getExpiresAt(), secondExpirationEntryMap);
-
         // Act
         repository.deleteByExpirationTime(LocalDateTime.now());
 
         // Assert
         assertTrue(cacheEntryMap.isEmpty());
-
-        assertTrue(cacheExpirationEntryMap.isEmpty());
     }
 
     private LocalDateTime getLocalDateTimeForExpiredEntry() {
@@ -520,13 +456,4 @@ class CacheRepositoryTest {
         }
     }
 
-    private Map<LocalDateTime, Map<String, CacheEntry>> getCacheExpirationEntryMap() {
-        try {
-            Field privateField = CacheRepository.class.getDeclaredField("expirationMap");
-            privateField.setAccessible(true);
-            return (Map<LocalDateTime, Map<String, CacheEntry>>) privateField.get(repository);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

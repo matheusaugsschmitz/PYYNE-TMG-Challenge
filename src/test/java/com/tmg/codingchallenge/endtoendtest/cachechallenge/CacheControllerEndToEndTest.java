@@ -1,9 +1,10 @@
 package com.tmg.codingchallenge.endtoendtest.cachechallenge;
 
-import com.tmg.codingchallenge.presentation.controller.CacheController;
-import com.tmg.codingchallenge.presentation.controller.NewCacheEntryRequestDto;
 import com.tmg.codingchallenge.data.CacheEntry;
 import com.tmg.codingchallenge.data.CacheRepository;
+import com.tmg.codingchallenge.presentation.controller.CacheController;
+import com.tmg.codingchallenge.presentation.controller.NewCacheEntryRequestDto;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,6 +31,10 @@ class CacheControllerEndToEndTest {
     @Autowired
     private CacheRepository cacheRepository;
 
+    @AfterEach
+    void clearRepositoryData() {
+        getCacheEntryMap().clear();
+    }
 
     @Test
     void addNameWithoutTTL_withSuccess() {
@@ -38,14 +43,11 @@ class CacheControllerEndToEndTest {
         String cacheEntryValue = "John";
         NewCacheEntryRequestDto requestDto = new NewCacheEntryRequestDto(cacheEntryKey, cacheEntryValue, null);
         Map<String, CacheEntry> cacheEntryMap = getCacheEntryMap();
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
 
         // Act
         controller.postEntry(requestDto);
 
         // Assert
-        assertTrue(cacheExpirationEntryMap.isEmpty());
-
         assertEquals(1, cacheEntryMap.size());
 
         CacheEntry nameCacheEntry = cacheEntryMap.get(cacheEntryKey);
@@ -53,9 +55,6 @@ class CacheControllerEndToEndTest {
         assertEquals(cacheEntryValue, nameCacheEntry.getValue());
         assertNull(nameCacheEntry.getTtl());
         assertNull(nameCacheEntry.getExpiresAt());
-
-        // Post test
-        controller.deleteEntry(cacheEntryKey);
     }
 
     @Test
@@ -71,9 +70,6 @@ class CacheControllerEndToEndTest {
 
         // Assert
         assertEquals(cacheEntryValue, response);
-
-        // Post test
-        controller.deleteEntry(cacheEntryKey);
     }
 
     @Test
@@ -97,7 +93,6 @@ class CacheControllerEndToEndTest {
         long cacheEntryTTL = 30L;
         NewCacheEntryRequestDto requestDto = new NewCacheEntryRequestDto(cacheEntryKey, cacheEntryValue, cacheEntryTTL);
         Map<String, CacheEntry> cacheEntryMap = getCacheEntryMap();
-        Map<LocalDateTime, Map<String, CacheEntry>> cacheExpirationEntryMap = getCacheExpirationEntryMap();
         LocalDateTime beforeCreationTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
         // Act
@@ -114,16 +109,6 @@ class CacheControllerEndToEndTest {
         assertEquals(cacheEntryValue, nameCacheEntry.getValue());
         assertEquals(cacheEntryTTL, nameCacheEntry.getTtl());
         assertThat(nameCacheEntry.getExpiresAt()).isBetween(beforeCreationTime.plus(cacheEntryTTL, ChronoUnit.SECONDS), afterCreationTime.plus(cacheEntryTTL, ChronoUnit.SECONDS));
-
-        assertEquals(1, cacheExpirationEntryMap.size());
-
-        Map<String, CacheEntry> expirationCacheEntry = cacheExpirationEntryMap.get(nameCacheEntry.getExpiresAt());
-        assertEquals(1, expirationCacheEntry.size());
-
-        assertEquals(nameCacheEntry, expirationCacheEntry.get(cacheEntryKey));
-
-        // Post test
-        controller.deleteEntry(cacheEntryKey);
     }
 
 
@@ -157,13 +142,4 @@ class CacheControllerEndToEndTest {
         }
     }
 
-    private Map<LocalDateTime, Map<String, CacheEntry>> getCacheExpirationEntryMap() {
-        try {
-            Field privateField = CacheRepository.class.getDeclaredField("expirationMap");
-            privateField.setAccessible(true);
-            return (Map<LocalDateTime, Map<String, CacheEntry>>) privateField.get(cacheRepository);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

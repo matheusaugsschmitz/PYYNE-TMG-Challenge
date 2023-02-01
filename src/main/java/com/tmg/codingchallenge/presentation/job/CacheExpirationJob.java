@@ -14,9 +14,9 @@ public class CacheExpirationJob {
     private final CacheExpirationService service;
 
     /**
-     * Cron expression "* * * * * *" = Runs every second.
+     * Cron expression "0 0/30 * * * ?" = Runs at minutes 0 and 30 from each hour.
      */
-    @Scheduled(cron = "* * * * * *")
+    @Scheduled(cron = "0 0/30 * * * ?")
     public void removeExpiredCacheEntries() {
         log.debug("Executing Cache Expiring Job");
         service.clearExpiredCacheEntries();
