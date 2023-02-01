@@ -38,9 +38,9 @@ public class CacheRepository {
     }
 
     public void deleteByKey(String key) {
-        final CacheEntry cacheEntryFound = cacheMap.remove(key);
-        removeExpirationEntry(cacheEntryFound);
-        log.debug("Key {} removed from cache.", key);
+        if (nonNull(cacheMap.remove(key))) {
+            log.debug("Key {} removed from cache.", key);
+        }
     }
 
     public void deleteByExpirationTime(LocalDateTime time) {
@@ -60,17 +60,6 @@ public class CacheRepository {
             expirationMap.put(cacheEntry.getExpiresAt(), expirationEntry);
         }
         return expirationEntry;
-    }
-
-    private void removeExpirationEntry(CacheEntry cacheEntry) {
-        ofNullable(cacheEntry)
-                .map(CacheEntry::getExpiresAt)
-                .map(expirationMap::get)
-                .ifPresent(expirationEntry -> {
-                    expirationEntry.remove(cacheEntry.getKey());
-                    if (expirationEntry.isEmpty())
-                        expirationMap.remove(cacheEntry.getExpiresAt());
-                });
     }
 
 }
