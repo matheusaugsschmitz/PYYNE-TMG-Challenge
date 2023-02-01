@@ -107,6 +107,30 @@ class CacheRepositoryTest {
 
 
     @Test
+    void getOptionalValueByKeyWithTTLExpired_withNoEmptyReturn() {
+        // Arrange
+        String cacheEntryValue = "Garry";
+        String cacheEntryKey = "name";
+        LocalDateTime localDateTimeForExpiredEntry = getLocalDateTimeForExpiredEntry();
+        CacheEntry cacheEntry;
+        try (MockedStatic<LocalDateTime> mock = mockStatic(LocalDateTime.class)) {
+            mock.when(LocalDateTime::now).thenReturn(localDateTimeForExpiredEntry);
+
+            cacheEntry = new CacheEntry(cacheEntryKey, cacheEntryValue, 150L);
+        }
+
+        Map<String, CacheEntry> cacheEntryMap = getCacheEntryMap();
+        cacheEntryMap.put(cacheEntryKey, cacheEntry);
+
+        // Act
+        Optional<String> response = repository.getOptionalValueByKey(cacheEntryKey);
+
+        // Assert
+        assertTrue(response.isEmpty());
+    }
+
+
+    @Test
     void saveNameWithTTL_withSuccess() {
         // Arrange
         String cacheEntryKey = "name";

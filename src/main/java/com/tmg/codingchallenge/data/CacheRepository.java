@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 
 @Slf4j
@@ -19,8 +19,15 @@ public class CacheRepository {
     private final Map<LocalDateTime, Map<String, CacheEntry>> expirationMap = new ConcurrentHashMap<>();
 
     public Optional<String> getOptionalValueByKey(String key) {
-        return Optional.ofNullable(cacheMap.get(key))
-                .map(CacheEntry::getValue);
+        CacheEntry cacheEntry = cacheMap.get(key);
+
+        if (nonNull(cacheEntry) && nonNull(cacheEntry.getExpiresAt())
+                && LocalDateTime.now().isAfter(cacheEntry.getExpiresAt())) {
+            cacheMap.remove(key, cacheEntry);
+            cacheEntry = null;
+        }
+
+        return Optional.ofNullable(cacheEntry).map(CacheEntry::getValue);
     }
 
     public void save(CacheEntry cacheEntry) {
