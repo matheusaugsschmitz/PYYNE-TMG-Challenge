@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -14,6 +15,6 @@ public class CacheExpirationServiceImpl implements CacheExpirationService {
 
     @Override
     public void clearExpiredCacheEntries() {
-        repository.deleteByExpirationTime(LocalDateTime.now());
+        repository.deleteByExpirationTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
     }
 }
